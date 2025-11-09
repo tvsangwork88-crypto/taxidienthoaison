@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taxi Nam Thắng</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; width: 100%;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      background-color: #000;
+      scroll-behavior: smooth;
+    }
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ===== MENU ĐẦU TRANG ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      z-index: 10000;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 6px 0;
+      backdrop-filter: blur(5px);
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      transition: color 0.2s ease;
+    }
+    nav a:hover {
+      color: #EFC521;
+    }
+
+    /* ===== ẢNH FULL WIDTH ===== */
+    img, picture { display: block; width: 100%; }
+    img { height: auto; vertical-align: middle; }
+
+    /* ===== KHỐI ẢNH ===== */
+    section {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+    }
+
+    /* ===== ICON TRÊN BANNER ===== */
+    .icon-row {
+      position: absolute;
+      top: 90%; left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex; align-items: center; justify-content: center;
+      gap: 18px; z-index: 2;
+    }
+    .icon-row img {
+      width: 30%; height: auto; cursor: pointer;
+      transition: transform .15s ease;
+      animation: shake-vertical .6s ease-in-out infinite;
+    }
+    .icon-row img:hover { transform: scale(1.08); }
+
+    /* ===== NÚT GỌI CỐ ĐỊNH ===== */
+    .call-button {
+      position: fixed; bottom: 20px; right: 20px;
+      width: 70px; height: 106px;
+      z-index: 9999;
+      transition: transform .2s ease-in-out;
+      animation: shake-phone .6s ease-in-out infinite;
+    }
+    .call-button:hover { transform: scale(1.1); }
+    .call-button img { width: 100%; height: auto; display: block; }
+
+    /* ===== HIỆU ỨNG ===== */
+    @keyframes shake-vertical {
+      0%,100% { transform: translateY(0); }
+      25% { transform: translateY(-6px); }
+      75% { transform: translateY(6px); }
+    }
+    @keyframes shake-phone {
+      0%,100% { transform: translateY(0); }
+      25% { transform: translateY(-8px); }
+      75% { transform: translateY(8px); }
+    }
+
+    /* ===== FADE-IN ===== */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: all 1s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      nav { gap: 20px; font-size: 15px; }
+      .icon-row { gap: 14px; }
+      .icon-row img { width: 100px; }
+      .call-button { width: 60px; height: 90px; }
+    }
+
+    /* ====== NÚT LIÊN HỆ NỔI ====== */
+#button-contact-vr {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* --- Vòng tròn ngoài --- */
+.phone-vr-circle-fill {
+  width: 70px;
+  height: 70px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.75;
+  animation: phonePulse 1.6s infinite ease-in-out;
+}
+
+/* --- Icon trung tâm --- */
+.phone-vr-img-circle {
+  width: 50px;
+  height: 50px;
+  top: 10px;
+  left: 10px;
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: phoneRing 1.2s infinite ease-in-out;
+}
+
+.phone-vr-img-circle img {
+  width: 22px;
+  height: 22px;
+}
+
+/* --- Gói chung cho 1 nút --- */
+.button-contact {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+/* ZALO - màu xanh */
+#zalo-vr .phone-vr-circle-fill {
+  background-color: rgba(33,150,243,0.7);
+  box-shadow: 0 0 0 0 #2196f3;
+}
+
+#zalo-vr .phone-vr-img-circle {
+  background-color: #2196f3;
+}
+
+/* GỌI NGAY - màu đỏ */
+#contact-vr .phone-vr-circle-fill {
+  background-color: rgba(230,8,8,0.7);
+  box-shadow: 0 0 0 0 #e60808;
+}
+
+#contact-vr .phone-vr-img-circle {
+  background-color: #e60808;
+}
+
+/* ===== Hiệu ứng animation ===== */
+@keyframes phonePulse {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.3);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px transparent;
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes phoneRing {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(-15deg); }
+  20% { transform: rotate(15deg); }
+  30% { transform: rotate(-15deg); }
+  40% { transform: rotate(15deg); }
+  50% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+  </style>
+</head>
+<body>
+
+  <!-- ===== THANH MENU ===== -->
+  <nav>
+    <a href="#home">Trang chủ</a>
+    <a href="#review">Đánh giá</a>
+    <a href="#service">Dịch vụ</a>
+  </nav>
+
+  <!-- ===== BGTX1 (HOME) ===== -->
+  <section id="home">
+    <picture>
+      <source srcset="./images/namthanglongxuyen.png" media="(min-width: 769px)">
+      <img src="./images/namthanglongxuyen.png" alt="Taxi Nam Thắng - Trang chủ" loading="eager">
+    </picture>
+    <div class="icon-row">
+      <img src="./images/bt-dichvu.png" alt="Dịch vụ">
+      <img src="./images/bt-lienhe.png" alt="Gọi 02963 711 911">
+      <img src="./images/bt-zalo.png" alt="Zalo">
+    </div>
+  </section>
+
+  <!-- ===== BGTX2 (REVIEW) ===== -->
+  <section id="review" class="fade-in">
+    <picture>
+      <source srcset="./images/bgtx2.jpg" media="(min-width: 769px)">
+      <img src="./images/bgtx2-m.jpg" alt="Đánh giá Taxi Nam Thắng" loading="lazy">
+    </picture>
+  </section>
+
+  <!-- ===== BGTX3 (SERVICE) ===== -->
+  <section id="service" class="fade-in">
+    <picture>
+      <source srcset="./images/bgtx3.jpg" media="(min-width: 769px)">
+      <img src="./images/bgtx3-m.jpg" alt="Dịch vụ Taxi Nam Thắng" loading="lazy">
+    </picture>
+  </section>
+
+  <!-- Nút Zalo và Gọi Ngay -->
+<div id="button-contact-vr">
+  <div id="zalo-vr" class="button-contact">
+    <div class="phone-vr">
+      <div class="phone-vr-circle-fill"></div>
+      <div class="phone-vr-img-circle">
+         <a href="tel:02963711911">
+          <img src="images/zalo.png" alt="Gọi ngay">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="contact-vr" class="button-contact">
+    <div class="phone-vr">
+      <div class="phone-vr-circle-fill"></div>
+      <div class="phone-vr-img-circle">
+        <a href="tel:02963711911">
+          <img src="images/phone.png" alt="Gọi ngay">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Hiệu ứng fade-in khi cuộn
+      const fadeEls = document.querySelectorAll('.fade-in');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add('visible');
+        });
+      }, { threshold: 0.2 });
+      fadeEls.forEach(el => io.observe(el));
+
+      // Xử lý click icon
+      const icons = document.querySelectorAll('.icon-row img');
+      icons.forEach(img => {
+        const src = img.getAttribute('src') || '';
+        img.addEventListener('click', () => {
+          if (src.includes('bt-lienhe')) {
+            window.location.href = 'tel:02963711911';
+          } else if (src.includes('bt-zalo')) {
+            window.open('https://zalo.me/02963711911', '_blank', 'noopener,noreferrer');
+          } else if (src.includes('bt-dichvu')) {
+            document.querySelector('#service').scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
