@@ -3,293 +3,499 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Taxi Điện Thoại Sơn</title>
+  <title>Taxi Thoại Sơn</title>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     html, body {
-      height: 100%; width: 100%;
+      height: 100%;
+      width: 100%;
       font-family: Arial, sans-serif;
-      overflow-x: hidden;
-      background-color: #000;
+      background: #050505;
+      color: #f9fafb;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
-    body { display: flex; flex-direction: column; min-height: 100vh; }
 
-    /* ===== MENU ĐẦU TRANG ===== */
-    nav {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      z-index: 10000;
+    body {
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 6px 0;
-      backdrop-filter: blur(5px);
+      flex-direction: column;
     }
-    nav a {
-      color: #fff;
+
+    /* ===== HEADER & NAVBAR ===== */
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.6));
+      border-bottom: 1px solid rgba(148,163,184,0.4);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: 15px;
+      color: #facc15;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+    }
+
+    .nav-links a {
       text-decoration: none;
-      font-weight: bold;
-      letter-spacing: 0.5px;
-      transition: color 0.2s ease;
-    }
-    nav a:hover {
-      color: #EFC521;
-    }
-
-    /* ===== ẢNH FULL WIDTH ===== */
-    img, picture { display: block; width: 100%; }
-    img { height: auto; vertical-align: middle; }
-
-    /* ===== KHỐI ẢNH ===== */
-    section {
+      color: #e5e7eb;
+      font-weight: 600;
       position: relative;
-      width: 100%;
-      line-height: 0;
+      padding-bottom: 4px;
     }
 
-    /* ===== ICON TRÊN BANNER ===== */
-    .icon-row {
+    .nav-links a::after {
+      content: "";
       position: absolute;
-      top: 90%; left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex; align-items: center; justify-content: center;
-      gap: 18px; z-index: 2;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+      width: 0;
+      background: #facc15;
+      transition: width .2s;
     }
-    .icon-row img {
-      width: 30%; height: auto; cursor: pointer;
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      font-size: 13px;
+      color: #f97316;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      flex: 1;
+      padding-top: 64px; /* tránh đè vào header */
+    }
+
+    /* ===== HERO SECTION (HOME) ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    /* Cột text bên trái */
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: rgba(21, 128, 61, 0.2);
+      border: 1px solid rgba(34,197,94,0.6);
+      color: #bbf7d0;
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 4vw, 34px);
+      line-height: 1.2;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fef9c3;
+    }
+
+    .hero-title span {
+      color: #22c55e;
+    }
+
+    .hero-text {
+      font-size: 14px;
+      color: #e5e7eb;
+      max-width: 440px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #22c55e, #84cc16);
+      color: #052e16;
+      box-shadow: 0 8px 25px rgba(34,197,94,0.4);
+    }
+
+    .btn-ghost {
+      border-color: #22c55e;
+      color: #bbf7d0;
+      background: transparent;
+    }
+
+    .hero-hotline {
+      font-size: 13px;
+      color: #a5b4fc;
+      margin-top: 6px;
+    }
+
+    /* Cột hình bên phải – dùng background thay vì <img> */
+    .hero-visual {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.75);
+      isolation: isolate;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("./images/background-center.png");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.02);
+      filter: saturate(1.1) contrast(1.02);
+      z-index: -1;
+    }
+
+    /* Icon hàng ngang ở dưới banner */
+    .hero-icons {
+      position: absolute;
+      left: 50%;
+      bottom: 4%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 14px;
+    }
+
+    .hero-icons img {
+      width: 110px;
+      height: auto;
+      cursor: pointer;
       transition: transform .15s ease;
       animation: shake-vertical .6s ease-in-out infinite;
     }
-    .icon-row img:hover { transform: scale(1.08); }
 
-    /* ===== NÚT GỌI CỐ ĐỊNH ===== */
-    .call-button {
-      position: fixed; bottom: 20px; right: 20px;
-      width: 70px; height: 106px;
-      z-index: 9999;
-      transition: transform .2s ease-in-out;
-      animation: shake-phone .6s ease-in-out infinite;
+    .hero-icons img:hover {
+      transform: scale(1.08);
     }
-    .call-button:hover { transform: scale(1.1); }
-    .call-button img { width: 100%; height: auto; display: block; }
 
-    /* ===== HIỆU ỨNG ===== */
+    /* ===== SECTION CHUNG ===== */
+    .section {
+      padding: 40px 16px 56px;
+      background: #020617;
+    }
+
+    .section-alt {
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+    }
+
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #facc15;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .section-img {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.8);
+      line-height: 0;
+    }
+
+    .section-img img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.9s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== NÚT LIÊN HỆ NỔI ===== */
+    #button-contact-vr {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 9999;
+    }
+
+    .button-contact {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+    }
+
+    .phone-vr-circle-fill {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      opacity: .8;
+      animation: phonePulse 1.6s infinite ease-in-out;
+    }
+
+    .phone-vr-img-circle {
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: phoneRing 1.2s infinite ease-in-out;
+    }
+
+    .phone-vr-img-circle img {
+      width: 22px;
+      height: 22px;
+    }
+
+    #zalo-vr .phone-vr-circle-fill {
+      background-color: rgba(33,150,243,0.7);
+      box-shadow: 0 0 0 0 #2196f3;
+    }
+    #zalo-vr .phone-vr-img-circle { background-color: #2196f3; }
+
+    #contact-vr .phone-vr-circle-fill {
+      background-color: rgba(230,8,8,0.7);
+      box-shadow: 0 0 0 0 #e60808;
+    }
+    #contact-vr .phone-vr-img-circle { background-color: #e60808; }
+
+    /* ANIMATION */
     @keyframes shake-vertical {
       0%,100% { transform: translateY(0); }
       25% { transform: translateY(-6px); }
       75% { transform: translateY(6px); }
     }
-    @keyframes shake-phone {
-      0%,100% { transform: translateY(0); }
-      25% { transform: translateY(-8px); }
-      75% { transform: translateY(8px); }
+
+    @keyframes phonePulse {
+      0% {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(0,0,0,0.3);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 14px transparent;
+      }
+      100% {
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 transparent;
+      }
     }
 
-    /* ===== FADE-IN ===== */
-    .fade-in { opacity: 0; transform: translateY(30px); transition: all 1s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    @keyframes phoneRing {
+      0% { transform: rotate(0deg); }
+      10% { transform: rotate(-15deg); }
+      20% { transform: rotate(15deg); }
+      30% { transform: rotate(-15deg); }
+      40% { transform: rotate(15deg); }
+      50% { transform: rotate(0deg); }
+      100% { transform: rotate(0deg); }
+    }
 
-    /* ===== MOBILE ===== */
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
-      nav { gap: 20px; font-size: 15px; }
-      .icon-row { gap: 14px; }
-      .icon-row img { width: 100px; }
-      .call-button { width: 60px; height: 90px; }
+      .nav-inner { justify-content: space-between; }
+      .nav-links { display: none; } /* mobile có thể làm menu khác sau */
+      .hero-inner {
+        grid-template-columns: minmax(0,1fr);
+        padding-top: 24px;
+      }
+      .hero-visual {
+        min-height: 260px;
+        order: -1;
+      }
+      .hero-icons img { width: 90px; }
+      #button-contact-vr {
+        right: 12px;
+        bottom: 16px;
+      }
     }
-
-    /* ====== NÚT LIÊN HỆ NỔI ====== */
-#button-contact-vr {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* --- Vòng tròn ngoài --- */
-.phone-vr-circle-fill {
-  width: 70px;
-  height: 70px;
-  top: 0;
-  left: 0;
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.75;
-  animation: phonePulse 1.6s infinite ease-in-out;
-}
-
-/* --- Icon trung tâm --- */
-.phone-vr-img-circle {
-  width: 50px;
-  height: 50px;
-  top: 10px;
-  left: 10px;
-  position: absolute;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: phoneRing 1.2s infinite ease-in-out;
-}
-
-.phone-vr-img-circle img {
-  width: 22px;
-  height: 22px;
-}
-
-/* --- Gói chung cho 1 nút --- */
-.button-contact {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  cursor: pointer;
-}
-
-/* ZALO - màu xanh */
-#zalo-vr .phone-vr-circle-fill {
-  background-color: rgba(33,150,243,0.7);
-  box-shadow: 0 0 0 0 #2196f3;
-}
-
-#zalo-vr .phone-vr-img-circle {
-  background-color: #2196f3;
-}
-
-/* GỌI NGAY - màu đỏ */
-#contact-vr .phone-vr-circle-fill {
-  background-color: rgba(230,8,8,0.7);
-  box-shadow: 0 0 0 0 #e60808;
-}
-
-#contact-vr .phone-vr-img-circle {
-  background-color: #e60808;
-}
-
-/* ===== Hiệu ứng animation ===== */
-@keyframes phonePulse {
-  0% {
-    transform: scale(0.9);
-    box-shadow: 0 0 0 0 rgba(0,0,0,0.3);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 15px transparent;
-  }
-  100% {
-    transform: scale(0.9);
-    box-shadow: 0 0 0 0 transparent;
-  }
-}
-
-@keyframes phoneRing {
-  0% { transform: rotate(0deg); }
-  10% { transform: rotate(-15deg); }
-  20% { transform: rotate(15deg); }
-  30% { transform: rotate(-15deg); }
-  40% { transform: rotate(15deg); }
-  50% { transform: rotate(0deg); }
-  100% { transform: rotate(0deg); }
-}
   </style>
 </head>
 <body>
 
-  <!-- ===== THANH MENU ===== -->
-  <nav>
-    <a href="#home">Trang chủ</a>
-    <a href="#review">Đánh giá</a>
-    <a href="#service">Dịch vụ</a>
-  </nav>
+<header>
+  <div class="nav-inner">
+    <div class="brand">TAXI ĐIỆN THOẠI SƠN</div>
+    <nav class="nav-links">
+      <a href="#home">Trang chủ</a>
+      <a href="#review">Đánh giá</a>
+      <a href="#service">Dịch vụ</a>
+    </nav>
+    <div class="nav-cta">Hotline: 02963 711 911</div>
+  </div>
+</header>
 
-  <!-- ===== BGTX1 (HOME) ===== -->
-  <section id="home">
-    <picture>
-      <source srcset="./images/namthanglongxuyen.png" media="(min-width: 769px)">
-      <img src="./images/namthanglongxuyen.png" alt="Taxi Nam Thắng - Trang chủ" loading="eager">
-    </picture>
-    <div class="icon-row">
-      <img src="./images/bt-dichvu.png" alt="Dịch vụ">
-      <img src="./images/bt-lienhe.png" alt="Gọi 02963 711 911">
-      <img src="./images/bt-zalo.png" alt="Zalo">
+<main>
+  <!-- HOME / HERO -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-chip">
+          <span>🚕 Taxi điện Thoại Sơn</span>
+        </div>
+        <h1 class="hero-title">
+          Gọi <span>xe điện an toàn</span><br>đưa đón tận nơi Thoại Sơn
+        </h1>
+        <p class="hero-text">
+          Đặt taxi nhanh trong vài giây, tài xế địa phương am hiểu đường sá,
+          giá cước minh bạch, phục vụ 24/7 tại khu vực Thoại Sơn và lân cận.
+        </p>
+        <div class="hero-actions">
+          <a href="tel:02963711911" class="btn-primary">📞 Gọi ngay 0296 3 711 911</a>
+          <a href="https://zalo.me/02963711911" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+            Chat Zalo
+          </a>
+        </div>
+        <div class="hero-hotline">
+          Hoặc bấm vào nút nổi góc màn hình để liên hệ nhanh.
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-icons">
+          <img src="./images/bt-dichvu.png" alt="Xem dịch vụ" data-action="service">
+          <img src="./images/bt-lienhe.png" alt="Gọi 0296 3 711 911" data-action="call">
+          <img src="./images/bt-zalo.png" alt="Zalo 0296 3 711 911" data-action="zalo">
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ===== BGTX2 (REVIEW) ===== -->
-  <section id="review" class="fade-in">
-    <picture>
-      <source srcset="./images/bgtx2.jpg" media="(min-width: 769px)">
-      <img src="./images/bgtx2-m.jpg" alt="Đánh giá Taxi Nam Thắng" loading="lazy">
-    </picture>
+  <!-- REVIEW -->
+  <section id="review" class="section section-alt fade-in">
+    <div class="section-inner">
+      <h2 class="section-title">Khách hàng đánh giá</h2>
+      <div class="section-img">
+        <img src="./images/bgtx2-m.jpg" alt="Đánh giá Taxi điện Thoại Sơn">
+      </div>
+    </div>
   </section>
 
-  <!-- ===== BGTX3 (SERVICE) ===== -->
-  <section id="service" class="fade-in">
-    <picture>
-      <source srcset="./images/bgtx3.jpg" media="(min-width: 769px)">
-      <img src="./images/bgtx3-m.jpg" alt="Dịch vụ Taxi Nam Thắng" loading="lazy">
-    </picture>
+  <!-- SERVICE -->
+  <section id="service" class="section fade-in">
+    <div class="section-inner">
+      <h2 class="section-title">Dịch vụ taxi điện</h2>
+      <div class="section-img">
+        <img src="./images/bgtx3-m.jpg" alt="Dịch vụ Taxi điện Thoại Sơn">
+      </div>
+    </div>
   </section>
+</main>
 
-  <!-- Nút Zalo và Gọi Ngay -->
+<!-- Nút Zalo & Gọi ngay -->
 <div id="button-contact-vr">
   <div id="zalo-vr" class="button-contact">
-    <div class="phone-vr">
-      <div class="phone-vr-circle-fill"></div>
-      <div class="phone-vr-img-circle">
-         <a href="tel:02963711911">
-          <img src="images/zalo.png" alt="Gọi ngay">
-        </a>
-      </div>
+    <div class="phone-vr-circle-fill"></div>
+    <div class="phone-vr-img-circle">
+      <a href="https://zalo.me/02963711911" target="_blank" rel="noopener noreferrer">
+        <img src="images/zalo.png" alt="Chat Zalo">
+      </a>
     </div>
   </div>
 
   <div id="contact-vr" class="button-contact">
-    <div class="phone-vr">
-      <div class="phone-vr-circle-fill"></div>
-      <div class="phone-vr-img-circle">
-        <a href="tel:02963711911">
-          <img src="images/phone.png" alt="Gọi ngay">
-        </a>
-      </div>
+    <div class="phone-vr-circle-fill"></div>
+    <div class="phone-vr-img-circle">
+      <a href="tel:02963711911">
+        <img src="images/phone.png" alt="Gọi ngay">
+      </a>
     </div>
   </div>
 </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Hiệu ứng fade-in khi cuộn
-      const fadeEls = document.querySelectorAll('.fade-in');
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) e.target.classList.add('visible');
-        });
-      }, { threshold: 0.2 });
-      fadeEls.forEach(el => io.observe(el));
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Fade-in khi cuộn
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    fadeEls.forEach(el => io.observe(el));
 
-      // Xử lý click icon
-      const icons = document.querySelectorAll('.icon-row img');
-      icons.forEach(img => {
-        const src = img.getAttribute('src') || '';
-        img.addEventListener('click', () => {
-          if (src.includes('bt-lienhe')) {
-            window.location.href = 'tel:02963711911';
-          } else if (src.includes('bt-zalo')) {
-            window.open('https://zalo.me/02963711911', '_blank', 'noopener,noreferrer');
-          } else if (src.includes('bt-dichvu')) {
-            document.querySelector('#service').scrollIntoView({ behavior: 'smooth' });
-          }
-        });
+    // Xử lý click icon trong hero
+    document.querySelectorAll('.hero-icons img').forEach(icon => {
+      icon.addEventListener('click', () => {
+        const action = icon.dataset.action;
+        if (action === 'call') {
+          window.location.href = 'tel:02963711911';
+        } else if (action === 'zalo') {
+          window.open('https://zalo.me/02963711911', '_blank', 'noopener,noreferrer');
+        } else if (action === 'service') {
+          document.querySelector('#service').scrollIntoView({ behavior: 'smooth' });
+        }
       });
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>
-
